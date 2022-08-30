@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Container } from './App.styled';
 import { Searchbar } from './components/Searchbar/Searchbar';
 import { ImageGallery } from './components/ImageGallery/ImageGallery';
@@ -111,7 +111,6 @@ export class App extends Component {
         {currentLargeImageURL && (
           <ModalWindow
             src={currentLargeImageURL}
-            // alt={alt}
             closeModal={this.onModalClose}
           />
         )}

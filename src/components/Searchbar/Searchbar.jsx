@@ -1,53 +1,83 @@
 import PropTypes from 'prop-types';
 import { Header, Form, Button, Span, Input } from './Searchbar.styled';
-import { Component } from 'react';
+import { useState } from 'react';
 
-export class Searchbar extends Component {
-  state = {
-    inputValue: '',
-  };
+export const Searchbar = ({ onSubmit, isLoading }) => {
+  const [inputValue, setInputValue] = useState('');
 
-  handleChange = e => {
-    this.setState({
-      inputValue: e.target.value,
-    });
-  };
+  return (
+    <Header>
+      <Form
+        onSubmit={e => {
+          e.preventDefault();
+          onSubmit(inputValue);
+          setInputValue('');
+        }}
+      >
+        <Button type="submit" disabled={isLoading}>
+          <Span>Search</Span>
+        </Button>
+        <Input
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
+        />
+      </Form>
+    </Header>
+  );
+};
 
-  resetInput() {
-    this.setState({ inputValue: '' });
-  }
+// export class Searchbar extends Component {
+//   state = {
+//     inputValue: '',
+//   };
 
-  render() {
-    const { inputValue } = this.state;
-    const { onSubmit, isLoading } = this.props;
+//   handleChange = e => {
+//     this.setState({
+//       inputValue: e.target.value,
+//     });
+//   };
 
-    return (
-      <Header>
-        <Form
-          onSubmit={e => {
-            e.preventDefault();
-            onSubmit(inputValue);
-            this.resetInput();
-          }}
-        >
-          <Button type="submit" disabled={isLoading}>
-            <Span>Search</Span>
-          </Button>
-          <Input
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            value={inputValue}
-            onChange={this.handleChange}
-          />
-        </Form>
-      </Header>
-    );
-  }
+//   resetInput() {
+//     this.setState({ inputValue: '' });
+//   }
 
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-  };
-}
+//   render() {
+//     const { inputValue } = this.state;
+//     const { onSubmit, isLoading } = this.props;
+
+//     return (
+//       <Header>
+//         <Form
+//           onSubmit={e => {
+//             e.preventDefault();
+//             onSubmit(inputValue);
+//             this.resetInput();
+//           }}
+//         >
+//           <Button type="submit" disabled={isLoading}>
+//             <Span>Search</Span>
+//           </Button>
+//           <Input
+//             type="text"
+//             autoComplete="off"
+//             autoFocus
+//             placeholder="Search images and photos"
+//             value={inputValue}
+//             onChange={this.handleChange}
+//           />
+//         </Form>
+//       </Header>
+//     );
+//   }
+
+// static
+// }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
